@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plant Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto; /* centers the container */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            font-size: 1rem;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .summary-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            background: #f9f9f9;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .summary-text {
+            margin: 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .summary-box img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">🌿 Plant Finder</h1>
+        <p style="text-align: center;">Describe the plant you’re looking for:</p>
+
+        <form method="POST">
+            <textarea name="text" rows="6" placeholder="e.g. I want an indoor plant that needs low watering and tolerates shade.">{{ request.form.text or '' }}</textarea><br>
+            <div style="text-align: center;">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+
+        {% if summaries %}
+            <h2 style="text-align: center;"> Plants for you:</h2>
+            {% for item in summaries %}
+                <div class="summary-box">
+                    {% if item.image %}
+                        <img src="{{ item.image }}" alt="Plant Image">
+                    {% endif %}
+                    <pre class="summary-text">{{ item.summary }}</pre>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
